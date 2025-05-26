@@ -5,6 +5,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+
+import Exceptions.ExceptionItemNotFound;
 import Inventaire.*;
 import Item.*;
 
@@ -172,7 +174,15 @@ public class GUIInventoryManager extends JFrame
                 showSelectErrorDialog();
             }
             else {
-                this.itemsListModel.removeElement(item);
+                try {
+                    this.itemsListModel.removeElement(item);
+                    inventoryManager.removeItem(item.getID());
+                    System.out.println("Suppresion reussi de l'item "+ item.getID());
+                }
+                catch (ExceptionItemNotFound e){
+                    showErrorDialog("L'item n'existe pas");
+                    System.err.println("Erreur : "+e.getMessage());
+                }
                 //
                 // TODO -- Ajoutez le code nécessaire pour supprimer un item ainsi que la gestion des
                 //         erreurs pour afficher un dialogue d'erreur si jamais on essaye d'effacer un
@@ -205,6 +215,9 @@ public class GUIInventoryManager extends JFrame
                 @Override
                 public void componentHidden(ComponentEvent e) {
                     Categori categori = guiItemChoiceDialog.getChosenCategory();
+                    /*switch (categori){
+                        case Categori.Bread :
+                            inventoryManager.addNewBreadItem();*/
                     //
                     // TODO -- Ajoutez le code nécessaire pour la création d'un nouvel item
                     //         ainsi que la gestion des erreurs possibles si nécessaire
