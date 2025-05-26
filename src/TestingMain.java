@@ -166,7 +166,7 @@ public class TestingMain {
     }
 
     public static void  ecrireInventaire(String chemin , InventoryManager inventoryManager){
-        try(BufferedWriter ecrivain = new BufferedWriter(new FileWriter(chemin,true))){
+        try(BufferedWriter ecrivain = new BufferedWriter(new FileWriter(chemin))){
             Item[] liste = inventoryManager.getArrayOfItems();
             for(int i = 0 ; i < liste.length ; i++){
                 ecrivain.write(

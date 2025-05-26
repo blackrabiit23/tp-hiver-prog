@@ -65,12 +65,7 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantityStock=" + quantityStock +
-                '}';
+        return ID+": "+getCategoryString()+" - "+name+"("+getQuantityInStock()+")";
     }
 
     public abstract Categori getCategory();
