@@ -7,6 +7,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import Exceptions.ExceptionInsufficientQuantityInStock;
+import Exceptions.ExceptionItemAlreadyExists;
 import Exceptions.ExceptionItemNotFound;
 import Inventaire.*;
 import Item.*;
@@ -96,10 +97,12 @@ public class GUIInventoryManager extends JFrame
             if (item == null) {
                 showSelectErrorDialog();
             } else {
-                //
-                // TODO -- Ajoutez le code pour ouvrir le dialogue de visualisation d'un item
-                //         ainsi que la gestion des erreurs possibles si nécessaire
-                //
+                try {
+                    GUIItemDialog dialog = new GUIItemDialog(this, item, false);
+                    dialog.setVisible(true);
+                }catch (ExceptionItemNotFound e){
+                    System.err.println("Erreur : "+e.getMessage());
+                }
             }
         });
 
@@ -236,15 +239,25 @@ public class GUIInventoryManager extends JFrame
                 @Override
                 public void componentHidden(ComponentEvent e) {
                     Categori categori = guiItemChoiceDialog.getChosenCategory();
-
-                    //
-                    // TODO -- Ajoutez le code nécessaire pour la création d'un nouvel item
-                    //         ainsi que la gestion des erreurs possibles si nécessaire
-                    //
-                    //         Conseil: Vous pourriez ajouter un item avec des valeurs temporaires puis demander
-                    //         à l'utilisateur de les remplacer dans le dialogue de modification d'item.
-                    //
-
+                    try {
+                        if (categori == Categori.Bread) {
+                            ItemBread bread = new ItemBread(Categori.Bread, 100, "nouvelle item a modifier", 0, "couleur a modifier", 0);
+                            itemsListModel.addElement(bread);
+                            inventoryManager.addNewBreadItem(Categori.Bread, 100, "nouvelle item a modifier", 0, "couleur a modifier", 0);
+                        }
+                        if (categori == Categori.Eggs) {
+                            ItemEggs egg= new ItemEggs(Categori.Eggs, 100, "nouvelle item a modifier", 0, "couleur a modifier", 0);
+                            itemsListModel.addElement(egg);
+                            inventoryManager.addNewEggsItem(Categori.Eggs, 100, "nouvelle item a modifier", 0, "couleur a modifier", 0);
+                        }
+                        if (categori == Categori.Milk){
+                            ItemMilk milk= new ItemMilk(Categori.Milk, 100, "nouvelle item a modifier", 0, 0, 0);
+                            itemsListModel.addElement(milk);
+                            inventoryManager.addNewEggsItem(Categori.Eggs, 100, "nouvelle item a modifier", 0, "couleur a modifier", 0);
+                        }
+                    }catch (ExceptionItemAlreadyExists g){
+                        showErrorDialog(g.getMessage());
+                    }
                 }
             });
 

@@ -106,6 +106,13 @@ public class TestingMain {
 
     }
 
+    /**
+     * Fonction pour lire dans un fichier.txt pour recuperer les informations pour les information necessaire
+     * pour cree les items.
+     *
+     * @param chemin
+     * @param inventoryManager
+     */
     public static void lireInventaire(String chemin, InventoryManager inventoryManager) {
         try (BufferedReader lecteur = new BufferedReader(new FileReader(chemin))) {
             String ligne;
@@ -165,6 +172,12 @@ public class TestingMain {
         }
     }
 
+    /**
+     *
+     * Ecrire dans un fichier texte les items qui sont l'inventory manager
+     * @param chemin
+     * @param inventoryManager
+     */
     public static void  ecrireInventaire(String chemin , InventoryManager inventoryManager){
         try(BufferedWriter ecrivain = new BufferedWriter(new FileWriter(chemin))){
             Item[] liste = inventoryManager.getArrayOfItems();
