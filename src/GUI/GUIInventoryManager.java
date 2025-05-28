@@ -153,6 +153,30 @@ public class GUIInventoryManager extends JFrame
             if (item == null) {
                 showSelectErrorDialog();
             } else {
+                GUIItemDialog dialog = new GUIItemDialog(this , item , true);
+                dialog.setVisible(true);
+                try {
+                    inventoryManager.getItem(item.getID()).setName(item.getName());
+                    inventoryManager.getItem(item.getID()).setPrice(item.getPrice());
+                    inventoryManager.getItem(item.getID()).setQuantityInStock(item.getQuantityInStock());
+                    if (item instanceof ItemMilk) {
+                        ItemMilk milk = (ItemMilk) inventoryManager.getItem(item.getID());
+                        milk.setFat(((ItemMilk) item).getFat());
+                        milk.setLiters(((ItemMilk) item).getLiters());
+                    } else if (item instanceof ItemBread) {
+                        ItemBread bread = (ItemBread) inventoryManager.getItem(item.getID());
+                        bread.setWeight(((ItemBread) item).getWeight());
+                        bread.setColor(((ItemBread) item).getColor());
+                    } else if (item instanceof ItemEggs) {
+                        ItemEggs eggs = (ItemEggs) inventoryManager.getItem(item.getID());
+                        eggs.setNumber(((ItemEggs) item).getNumber());
+                        eggs.setColor(((ItemEggs) item).getColor());
+                    }
+                }catch (ExceptionItemNotFound e){
+                    System.err.println("Erreur : "+e.getMessage());
+                }
+                System.out.println(item.getName() +" "+item.getPrice());
+
                 //
                 // TODO -- Ajoutez le code pour ouvrir le dialogue d'édition d'un item
                 //         ainsi que la gestion des erreurs possibles si nécessaire
@@ -179,15 +203,10 @@ public class GUIInventoryManager extends JFrame
                     inventoryManager.removeItem(item.getID());
                     System.out.println("Suppresion reussi de l'item "+ item.getID());
                 }
-                catch (ExceptionItemNotFound e){
+                catch (ExceptionItemNotFound e) {
                     showErrorDialog("L'item n'existe pas");
-                    System.err.println("Erreur : "+e.getMessage());
+                    System.err.println("Erreur : " + e.getMessage());
                 }
-                //
-                // TODO -- Ajoutez le code nécessaire pour supprimer un item ainsi que la gestion des
-                //         erreurs pour afficher un dialogue d'erreur si jamais on essaye d'effacer un
-                //         item qui n'existe pas
-                //
             }
         });
 
@@ -215,9 +234,7 @@ public class GUIInventoryManager extends JFrame
                 @Override
                 public void componentHidden(ComponentEvent e) {
                     Categori categori = guiItemChoiceDialog.getChosenCategory();
-                    /*switch (categori){
-                        case Categori.Bread :
-                            inventoryManager.addNewBreadItem();*/
+
                     //
                     // TODO -- Ajoutez le code nécessaire pour la création d'un nouvel item
                     //         ainsi que la gestion des erreurs possibles si nécessaire
