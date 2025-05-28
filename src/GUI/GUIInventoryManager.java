@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import Exceptions.ExceptionInsufficientQuantityInStock;
 import Exceptions.ExceptionItemNotFound;
 import Inventaire.*;
 import Item.*;
@@ -114,10 +115,15 @@ public class GUIInventoryManager extends JFrame
             if (item == null) {
                 showSelectErrorDialog();
             } else {
-                //
-                // TODO -- Ajoutez le code nécessaire pour augmenter la quantité d'un item
-                //         ainsi que la gestion des erreurs possibles si nécessaire
-                //
+                try {
+                    item.increaseQuantityStock(1);
+                    inventoryManager.getItem(item.getID()).increaseQuantityStock(1);
+                }catch (ExceptionItemNotFound e){
+                    GUIErrorDialog erreur = new GUIErrorDialog(this, e.getMessage());
+                    erreur.setVisible(true);
+                    System.err.println("Erreur :"+e.getMessage());
+
+                }
             }
         });
 
@@ -133,11 +139,14 @@ public class GUIInventoryManager extends JFrame
             if (item == null) {
                 showSelectErrorDialog();
             } else {
-                //
-                // TODO -- Ajoutez le code nécessaire pour réduire la quantité ainsi que la gestion des
-                //  erreurs et afficher un dialogue d'erreur si jamais on essaye d'aller en dessous de zéro
-                //
-
+                try {
+                    item.decreaseQuantityStock(1);
+                    inventoryManager.getItem(item.getID()).decreaseQuantityStock(1);
+                } catch (ExceptionInsufficientQuantityInStock e) {
+                    GUIErrorDialog erreur = new GUIErrorDialog(this, e.getMessage());
+                    erreur.setVisible(true);
+                    System.err.println("Erreur : "+e.getMessage());
+                }
             }
         });
 
@@ -175,13 +184,6 @@ public class GUIInventoryManager extends JFrame
                 }catch (ExceptionItemNotFound e){
                     System.err.println("Erreur : "+e.getMessage());
                 }
-                System.out.println(item.getName() +" "+item.getPrice());
-
-                //
-                // TODO -- Ajoutez le code pour ouvrir le dialogue d'édition d'un item
-                //         ainsi que la gestion des erreurs possibles si nécessaire
-                //
-
             }
         });
 
