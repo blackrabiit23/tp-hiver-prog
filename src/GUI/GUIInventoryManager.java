@@ -12,8 +12,7 @@ import Exceptions.ExceptionItemNotFound;
 import Inventaire.*;
 import Item.*;
 
-public class GUIInventoryManager extends JFrame
-{
+public class GUIInventoryManager extends JFrame {
     private InventoryManager inventoryManager;
     private DefaultListModel<Item> itemsListModel;
     private JList itemsList;
@@ -88,6 +87,10 @@ public class GUIInventoryManager extends JFrame
         return itemButtons;
     }
 
+    /**
+     * Methode pour visualiser Visualiser toutes les informations sur l’item sélectionné.
+     * @return
+     */
     private JButton createViewButton() {
         JButton button = new JButton(new ImageIcon("icons/view.png"));
         button.setBorder(buttonBorder());
@@ -109,6 +112,10 @@ public class GUIInventoryManager extends JFrame
         return button;
     }
 
+    /**
+     * Methode pour incrémenter la quantité en stock pour l’item sélectionné dans l'interface graphique et synchroniser l'evenement avec l'inventaire
+     * @return button pour ou il y a l'evenement
+     */
     private JButton createIncreaseButton() {
         JButton button = new JButton(new ImageIcon("icons/increase.png"));
         button.setBorder(buttonBorder());
@@ -133,6 +140,10 @@ public class GUIInventoryManager extends JFrame
         return button;
     }
 
+    /**
+     * Methode pour décrémenter la quantité en stock pour l’item sélectionné dans l'interface graphique et synchroniser l'evenement avec l'inventaire
+     * @return button pour ou il y a l'evenement
+     */
     private JButton createDecreaseButton() {
         JButton button = new JButton(new ImageIcon("icons/decrease.png"));
         button.setBorder(buttonBorder());
@@ -146,6 +157,7 @@ public class GUIInventoryManager extends JFrame
                     item.decreaseQuantityStock(1);
                     inventoryManager.getItem(item.getID()).decreaseQuantityStock(1);
                 } catch (ExceptionInsufficientQuantityInStock e) {
+                    inventoryManager.getItem(item.getID()).setQuantityInStock(0);
                     GUIErrorDialog erreur = new GUIErrorDialog(this, e.getMessage());
                     erreur.setVisible(true);
                     System.err.println("Erreur : "+e.getMessage());
@@ -156,6 +168,10 @@ public class GUIInventoryManager extends JFrame
         return button;
     }
 
+    /**
+     * Methode pour pouvoir modifier les attributs de l'item selectioner dans l'interface graphique et synchroniser l'evenement avec l'inventaire
+     * @return button pour ou il y a l'evenement
+     */
     private JButton createEditButton() {
         JButton button = new JButton(new ImageIcon("icons/edit.png"));
         button.setBorder(buttonBorder());
@@ -193,6 +209,10 @@ public class GUIInventoryManager extends JFrame
         return button;
     }
 
+    /**
+     * Methode pour supprimer l'item selectionner de l'interface graphique et synchroniser l'evenement avec l'inventaire.
+     * @return button pour ou il y a l'evenement
+     */
     private JButton createDeleteButton() {
         JButton button = new JButton(new ImageIcon("icons/delete.png"));
         button.setBorder(buttonBorder());
@@ -218,6 +238,10 @@ public class GUIInventoryManager extends JFrame
         return button;
     }
 
+    /**
+     * Ajout d'un item selon sa categorie dans l'interface graphique et synchroniser l'evenemrnt avec l'inventaire.
+     * @return button pour ou il y a l'evenement
+     */
     private JPanel createNewButton() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));

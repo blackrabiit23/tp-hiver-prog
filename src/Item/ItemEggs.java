@@ -1,3 +1,9 @@
+/**
+ * Classe ItemEggs qui heritent de Item pour un item oeuf
+ *
+ * @author El khazraji Brahim
+ * @version 1.0
+ */
 package Item;
 
 public class ItemEggs extends Item{
@@ -57,9 +63,9 @@ public class ItemEggs extends Item{
     }
 
     /**
-     * Retourne la catégorie de l'article (fixée à {@code Categori.Eggs}).
+     * Retourne la catégorie de l'article
      *
-     * @return La catégorie {@code Categori.Eggs}.
+     * @return Categori.Eggs
      */
     public Categori getCategory() {
         return Categori.Eggs;

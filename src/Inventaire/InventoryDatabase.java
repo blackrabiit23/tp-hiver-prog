@@ -1,3 +1,9 @@
+/**
+ * Classe qui a les methode de l'inventaire
+ *
+ * @author El khazraji Brahim
+ * @version 1.0
+ */
 package Inventaire;
 import Exceptions.ExceptionItemAlreadyExists;
 import Exceptions.ExceptionItemNotFound;
@@ -7,10 +13,18 @@ public class InventoryDatabase {
     private int ItemsCont;
     private InventoryDatabaseNode first;
 
+    /**
+     * Constructeur de l'Inventaire
+     */
     public InventoryDatabase() {
         first = null;
     }
 
+    /**
+     * Inserer un item dans l'inventaire
+     * @param item item a rechercher
+     * @throws ExceptionItemAlreadyExists lance une exception si l'item existe deja
+     */
     public void insert(Item item) throws ExceptionItemAlreadyExists {
         InventoryDatabaseNode courant = first;
         while (courant != null) {
@@ -33,6 +47,13 @@ public class InventoryDatabase {
         ItemsCont++;
     }
 
+    /**
+     * Methode pour rechercher un item
+     *
+     * @param ID identifiant de l'item
+     * @return l'item a rechercher
+     * @throws ExceptionItemNotFound lance une exception si l'item existe pas
+     */
     public Item findByID(int ID) throws ExceptionItemNotFound {
         if (ItemsCont == 0)
             System.out.println("La liste est vide");
@@ -48,6 +69,12 @@ public class InventoryDatabase {
         throw new ExceptionItemNotFound(ID);
     }
 
+    /**
+     * Methode pour enlever de la liste
+     *
+     * @param ID identifiant de l'item
+     * @throws ExceptionItemNotFound lance une exception si l'item existe pas
+     */
     public void remove(int ID) throws ExceptionItemNotFound {
         if (first == null)
             throw new ExceptionItemNotFound(ID);
@@ -72,6 +99,11 @@ public class InventoryDatabase {
         throw new ExceptionItemNotFound(ID);
     }
 
+    /**
+     * Transforme la structure de donnes des items (liste chainees) en tableau([])
+     *
+     * @return la liste d'item en tableau
+     */
     public Item[] getArrayList() {
         Item[] liste = new Item[ItemsCont];
         InventoryDatabaseNode courant = first;

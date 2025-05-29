@@ -1,5 +1,5 @@
 /**
- * Classe utilitaire pour effectuer des calculs mathématiques simples.
+ * Classe de itemBred qui heritent de Item pour un item pain
  *
  * @author El khazraji Brahim
  * @version 1.0
